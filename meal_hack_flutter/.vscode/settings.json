@@ -1,0 +1,13 @@
+{
+    "rest-client.environmentVariables": {
+        "sandbox": {
+            "baseUrl": "http://ad4decd8249e.ngrok.io",
+            // "authorization": "472a788a5dcd0084af2ec4bc6020fcb0ddeefb37a591ff3e7ef97013011fcfc1",
+            // "accessToken": "5ee2c962a9812ad34c421429a4bb82900597e461dd285e05f0abd29c4fb97534"
+        },
+        "production": {
+    
+        }
+    },
+    
+}
