@@ -18,7 +18,7 @@ class MealsApi(Resource):
     def post(self) -> Response:
         data = request.get_json()
         post_user = Meal(**data).save()
-        return jsonify({'result': post_user})
+        return jsonify(post_user)
 
 class MealApi(Resource):
     """
@@ -27,13 +27,13 @@ class MealApi(Resource):
 
     def get(self, meal_id: str) -> Response:
         output = Meal.objects(id=meal_id)
-        return jsonify({'result': output})
+        return jsonify(output)
 
     def put(self, meal_id:str) -> Response:
         data = request.get_json()
         put_user = Meal.objects(id=meal_id).update(**data)
-        return jsonify({'result': put_user})
+        return jsonify(put_user)
 
     def delete(self, meal_id:str) -> Response:
         delete_user = Meal.objects(id=meal_id).delete()
-        return jsonify({'result': delete_user})
+        return jsonify(delete_user)

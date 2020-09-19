@@ -11,7 +11,7 @@ class UsersApi(Resource):
     """
     def get(self) -> Response:
         output = User.objects()
-        return jsonify({'result': output})
+        return jsonify(output)
 
 
 class UserApi(Resource):
@@ -21,15 +21,15 @@ class UserApi(Resource):
 
     def get(self, user_id: str) -> Response:
         output = User.objects(id=user_id)
-        return jsonify({'result': output})
+        return jsonify(output)
 
     def put(self, user_id: str) -> Response:
         data = request.get_json()
         put_user = User.objects(id=user_id).update(**data)
-        return jsonify({'result', put_user})
+        return jsonify(put_user)
     
     def delete(self, user_id: str) -> Response:
         output = User.objects(id=user_id).delete()
-        return jsonify({'result': output})
+        return jsonify(output)
 
    

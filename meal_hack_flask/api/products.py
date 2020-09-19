@@ -13,12 +13,12 @@ class ProductsApi(Resource):
 
     def get(self) -> Response:
         output = Product.objects()
-        return jsonify({'result': output})
+        return jsonify(output)
 
     def post(self) -> Response:
         data = request.get_json()
         post_user = Product(**data).save()
-        return jsonify({'result': post_user})
+        return jsonify(post_user)
 
 class ProductApi(Resource):
     """
@@ -27,13 +27,13 @@ class ProductApi(Resource):
 
     def get(self, migros_id: int) -> Response:
         output = Product.objects(migros_id=migros_id)
-        return jsonify({'result': output})
+        return jsonify(output)
 
     def put(self, migros_id:int) -> Response:
         data = request.get_json()
         put_user = Product.objects(migros_id=migros_id).update(**data)
-        return jsonify({'result': put_user})
+        return jsonify(put_user)
 
     def delete(self, migros_id:int) -> Response:
         delete_user = Product.objects(migros_id=migros_id).delete()
-        return jsonify({'result': delete_user})
+        return jsonify(delete_user)
