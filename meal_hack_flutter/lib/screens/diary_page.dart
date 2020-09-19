@@ -1,15 +1,6 @@
 import 'package:flutter/material.dart';
 
 class DiaryPage extends StatelessWidget {
-  // Future<void> _delete(BuildContext context, Job job) async {
-  //   try {
-  //     final database = Provider.of<Database>(context, listen: false);
-  //     await database.deleteJob(job);
-  //   } on PlatformException catch (e) {
-  //     PlatformExceptionAlertDialog(title: 'Failed to create job', exception: e)
-  //         .show(context);
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {

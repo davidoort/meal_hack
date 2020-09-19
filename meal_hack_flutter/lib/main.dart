@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:meal_hack_flutter/constants/routing_constants.dart';
 import 'package:meal_hack_flutter/screens/home_page.dart';
+import 'package:meal_hack_flutter/helpers/router.dart' as router;
 
 void main() {
   runApp(MyApp());
@@ -14,7 +16,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.orange,
         scaffoldBackgroundColor: Colors.grey[200],
       ),
-      home: HomePage(),
+      // home: HomePage(),
+      onGenerateRoute: router.generateRoute,
+      initialRoute: DiaryPageRoute,
       debugShowCheckedModeBanner: false,
     );
   }

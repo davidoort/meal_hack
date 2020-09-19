@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 
 class GroceriesPage extends StatelessWidget {
-  // Future<void> _delete(BuildContext context, Job job) async {
-  //   try {
-  //     final database = Provider.of<Database>(context, listen: false);
-  //     await database.deleteJob(job);
-  //   } on PlatformException catch (e) {
-  //     PlatformExceptionAlertDialog(title: 'Failed to create job', exception: e)
-  //         .show(context);
-  //   }
-  // }
+  // const GroceriesPage(
+  //     {Key key,
+  //     @required this.currentTab,
+  //     @required this.onSelectTab,
+  //     @required this.widgetBuilder,
+  //     @required this.navigatorKeys})
+  //     : super(key: key);
+
+  // final TabItem currentTab;
+  // final ValueChanged<TabItem> onSelectTab;
+  // final Map<TabItem, WidgetBuilder> widgetBuilder;
+  // final Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys;
 
   @override
   Widget build(BuildContext context) {
@@ -33,30 +36,4 @@ class GroceriesPage extends StatelessWidget {
       //     context), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
-
-  // Widget _buildContent(BuildContext context, Database database) {
-  //   return StreamBuilder<List<Job>>(
-  //     stream: database.jobsStream(),
-  //     builder: (context, snapshot) {
-  //       return ListItemsBuilder<Job>(
-  //         snapshot: snapshot,
-  //         itemBuilder: (context, job) => Dismissible(
-  //           key: Key('job-${job.id}'),
-  //           background: Container(
-  //             color: Colors.red,
-  //           ),
-  //           direction: DismissDirection.endToStart,
-  //           onDismissed: (_) => _delete(context, job),
-  //           child: JobListTile(
-  //             job: job,
-  //             onTap: () => JobEntriesPage.show(
-  //               context,
-  //               job,
-  //             ),
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
 }
