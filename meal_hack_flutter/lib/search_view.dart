@@ -102,18 +102,7 @@ class ListSearchState extends State<ListSearch> {
               onChanged: onItemChanged,
             ),
           ),
-
-          /*
-          Switch(
-            value: meals,
-            onChanged: (value){
-              setState(() {
-                meals=value;
-                toast("Hell yeah, search them " + (meals ? "meals" : "ingredients") + "!");
-              });
-            }
-          ),
-          */
+          
 
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
