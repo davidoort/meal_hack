@@ -50,6 +50,3 @@ class CupertinoHomeScaffold extends StatelessWidget {
     );
   }
 }
-
-
-

@@ -3,6 +3,7 @@ import 'package:meal_hack_flutter/helpers/cupertino_home_scaffold.dart';
 import 'package:meal_hack_flutter/helpers/tab_item.dart';
 import 'package:meal_hack_flutter/screens/groceries_page.dart';
 import 'package:meal_hack_flutter/screens/diary_page.dart';
+import 'package:meal_hack_flutter/screens/search_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -23,13 +24,13 @@ class _HomePageState extends State<HomePage> {
 
   Map<TabItem, WidgetBuilder> get widgetBuilder => {
         TabItem.diary: (_) => DiaryPage(),
-        // TabItem.recommendations: (_) => EntriesPage.create(context),
+        TabItem.search: (_) => SearchPage(),
         TabItem.groceries: (_) => GroceriesPage(),
       };
 
   final Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys = {
     TabItem.diary: GlobalKey<NavigatorState>(),
-    // TabItem.recommendations: GlobalKey<NavigatorState>(),
+    TabItem.search: GlobalKey<NavigatorState>(),
     TabItem.groceries: GlobalKey<NavigatorState>(),
   };
 

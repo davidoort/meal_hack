@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-// enum TabItem { diary, recommendations, groceries }
-enum TabItem { diary, groceries }
+enum TabItem { diary, search, groceries }
 
 class TabItemData {
   const TabItemData({@required this.title, @required this.icon});
@@ -11,8 +10,7 @@ class TabItemData {
 
   static const Map<TabItem, TabItemData> allTabs = {
     TabItem.diary: TabItemData(title: 'Diary', icon: Icons.view_headline),
-    // TabItem.recommendations:
-    // TabItemData(title: 'Recommended', icon: Icons.lightbulb_outline),
+    TabItem.search: TabItemData(title: 'Search', icon: Icons.search),
     TabItem.groceries:
         TabItemData(title: 'Groceries', icon: Icons.shopping_basket),
   };
