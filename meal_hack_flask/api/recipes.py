@@ -26,14 +26,14 @@ class RecipeApi(Resource):
     """
 
     def get(self, migros_id: int) -> Response:
-        output = Recipe.objects(id=migros_id)
+        output = Recipe.objects(migros_id=migros_id)
         return jsonify({'result': output})
 
     def put(self, migros_id:int) -> Response:
         data = request.get_json()
-        put_user = Recipe.objects(id=migros_id).update(**data)
+        put_user = Recipe.objects(migros_id=migros_id).update(**data)
         return jsonify({'result': put_user})
 
     def delete(self, migros_id:int) -> Response:
-        delete_user = Recipe.objects(id=migros_id).delete()
+        delete_user = Recipe.objects(migros_id=migros_id).delete()
         return jsonify({'result': delete_user})
