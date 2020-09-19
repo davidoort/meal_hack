@@ -1,6 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:meal_hack_flutter/screens/meal_page.dart';
 import 'package:overlay_support/overlay_support.dart';
+import 'package:http/http.dart' as http;
+import '../models/meal.dart';
+import 'dart:convert';
+import 'dart:core';
+
+Future<List<Meal>> fetchMeals() async {
+  final response = await http.get('http://ad4decd8249e.ngrok.io/meals/');
+
+  if (response.statusCode == 200) {
+    Iterable list = json.decode(response.body);
+    return List<Meal>.from(list.map((e) => Meal.fromJson(e)));
+  } else {
+    throw Exception('Failed to load meals');
+  }
+}
 
 class DiaryPage extends StatefulWidget {
   @override
@@ -8,8 +23,17 @@ class DiaryPage extends StatefulWidget {
 }
 
 class _DiaryPageState extends State<DiaryPage> {
+  Future<List<Meal>> futureMeals;
+
   Future navigateToMealPage(context) async {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => MealPage()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => MealPage()));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    futureMeals = fetchMeals();
   }
 
   @override
@@ -19,6 +43,17 @@ class _DiaryPageState extends State<DiaryPage> {
         title: Text("Diary"),
       ),
       body: Center(
+          child: FutureBuilder<List<Meal>>(
+              future: futureMeals,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  List<Meal> meals = snapshot.data;
+                  return new Text(meals[0].quantity.toString());
+                } else if (snapshot.hasError) return Text("${snapshot.error}");
+
+                return CircularProgressIndicator();
+              })
+          /*
         child: ListView(
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
@@ -36,8 +71,8 @@ class _DiaryPageState extends State<DiaryPage> {
               },
             ),
           ],
-        ),
-      ),
+        ),*/
+          ),
     );
   }
 }

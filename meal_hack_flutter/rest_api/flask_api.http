@@ -1,5 +1,5 @@
 # Used to get an access token given an autorization key
-GET http://ad4decd8249e.ngrok.io/recipes/
+GET http://ad4decd8249e.ngrok.io/products/
 # Authorization: Basic {{authorization}}
 
 # ###
