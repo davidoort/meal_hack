@@ -13,7 +13,7 @@ class MealsApi(Resource):
 
     def get(self) -> Response:
         output = Meal.objects()
-        return jsonify({'result': output})
+        return jsonify(output)
 
     def post(self) -> Response:
         data = request.get_json()
