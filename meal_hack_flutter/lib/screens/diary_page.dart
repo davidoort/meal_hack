@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meal_hack_flutter/screens/meal_page.dart';
 import 'package:overlay_support/overlay_support.dart';
 
 class DiaryPage extends StatefulWidget {
@@ -7,6 +8,10 @@ class DiaryPage extends StatefulWidget {
 }
 
 class _DiaryPageState extends State<DiaryPage> {
+  Future navigateToMealPage(context) async {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => MealPage()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,25 +23,16 @@ class _DiaryPageState extends State<DiaryPage> {
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: <Widget>[
-            /*
-            DrawerHeader(
-              child: Text('Meal plan'),
-              decoration: BoxDecoration(
-                color: Colors.orange,
-              ),
-            ),
-            */
             ListTile(
               title: Text('Meal 1'),
               onTap: () {
-                // Move to the meal viewing screen
-                toast("I can haz transishion pweeeaze ?");
+                navigateToMealPage(context);
               },
             ),
             ListTile(
               title: Text('Meal 2'),
               onTap: () {
-                toast("I can haz transishion pweeeaze ?");
+                navigateToMealPage(context);
               },
             ),
           ],

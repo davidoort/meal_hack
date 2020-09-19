@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:meal_hack_flutter/screens/ingredient_page.dart';
 import 'package:overlay_support/overlay_support.dart';
 
-void main() {
-  // debugPaintSizeEnabled = true;
-  runApp(MyApp());
-}
+class MealPage extends StatelessWidget {
+  Future navigateToIngredientPage(context) async {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => IngredientPage()));
+  }
 
-class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget titleSection = Container(
@@ -67,15 +67,13 @@ class MyApp extends StatelessWidget {
           ListTile(
             title: Text('Ingredient 1'),
             onTap: () {
-              // Move to the ingredient viewing screen
-              toast("I can haz transishion pweeeaze ?");
+                navigateToIngredientPage(context);
             },
           ),
           ListTile(
             title: Text('Ingredient 2'),
             onTap: () {
-              // Move to the ingredient viewing screen
-              toast("I can haz transishion pweeeaze ?");
+                navigateToIngredientPage(context);
             },
           ),
         ],
@@ -90,28 +88,23 @@ class MyApp extends StatelessWidget {
       ),
     );
 
-    return OverlaySupport(
-      child: MaterialApp(
-        title: 'Meal view',
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text('<Insert meal title here>'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('<Insert meal title here>'),
+      ),
+       body: ListView(
+         children: [
+           Image.asset(
+            'images/meal1.jpeg',
+            width: 600,
+            height: 240,
+            fit: BoxFit.cover,
           ),
-          body: ListView(
-            children: [
-              Image.asset(
-                'images/meal1.jpeg',
-                width: 600,
-                height: 240,
-                fit: BoxFit.cover,
-              ),
-              titleSection,
-              labelSection,
-              ingredientsSection,
-              preparationSection,
-            ],
-          ),
-        ),
+          titleSection,
+           labelSection,
+           ingredientsSection,
+           preparationSection,
+        ],
       ),
     );
   }

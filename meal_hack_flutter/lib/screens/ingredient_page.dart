@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:overlay_support/overlay_support.dart';
 
-void main() {
-  // debugPaintSizeEnabled = true;
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
+class IngredientPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget titleSection = Container(
@@ -52,26 +47,21 @@ class MyApp extends StatelessWidget {
     );
 
 
-    return OverlaySupport(
-      child: MaterialApp(
-        title: 'Ingredient view',
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text('<Insert ingredient name here>'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('<Insert ingredient name here>'),
+       ),
+      body: ListView(
+        children: [
+           Image.asset(
+             'images/ingredient1.jpeg',
+            width: 600,
+            height: 240,
+            fit: BoxFit.cover,
           ),
-          body: ListView(
-            children: [
-              Image.asset(
-                'images/ingredient1.jpeg',
-                width: 600,
-                height: 240,
-                fit: BoxFit.cover,
-              ),
-              titleSection,
-              labelSection,
-            ],
-          ),
-        ),
+          titleSection,
+          labelSection,
+        ],
       ),
     );
   }
