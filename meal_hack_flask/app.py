@@ -9,7 +9,7 @@ from api.routes import create_routes
 # default mongodb configuration
 default_config = {
     'MONGODB_SETTINGS': {
-        'db': 'meal_hack',
+        'db': 'meal_hacks',
         'host': 'localhost',
         'port': 27017,
          
