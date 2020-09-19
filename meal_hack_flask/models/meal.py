@@ -1,4 +1,5 @@
-from mongoengine import Document, StringField, FloatField
+from mongoengine import Document, StringField, FloatField, DateField, IntField, ReferenceField
+from models.recepie import Recepie
 
 class Meal(Document):
     """
@@ -10,7 +11,8 @@ class Meal(Document):
     :Example:
     """
 
-    name = StringField(required=True)
-    description = StringField(max_length=240)
-    price = FloatField()
-    image_url = StringField()
+    # user_id = StringField(required=True)
+    date = DateField(required=True)
+    quantity = IntField(min_value=1)
+    note = StringField(max_length=240)
+    recepie = ReferenceField(Recepie)

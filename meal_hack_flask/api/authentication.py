@@ -35,7 +35,7 @@ class SignUpApi(Resource):
         :return: JSON object
         """
         data = request.get_json()
-        post_user = Users(**data)
+        post_user = User(**data)
         post_user.save()
         output  = {'id': str(post_user.id)}
         return jsonify({'result': output})
@@ -65,7 +65,7 @@ class LoginApi(Resource):
         :return: JSON object
         """
         data = request.get_json()
-        user = Users.objects.get(email=data.get("email"))
+        user = User.objects.get(email=data.get("email"))
         auth_success = user.check_pw_hash(data.get("password"))
         if not auth_success:
             return unauthorized()
