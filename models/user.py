@@ -58,31 +58,12 @@ class User(Document):
     :param fav_meals: List of Meal objects
     :param name: option unique string username
     :param phone: optional string phone-number, must be valid via regex
-
-    :Example:
-
-    >>> import mongoengine
-    >>> from app import default_config
-
-    >>> mongoengine.connect(**default_config['MONGODB_SETTINGS'])
-    MongoClient(host=['localhost:27017'], document_class=dict, tz_aware=False, connect=True, read_preference=Primary())
-
-    # Create test user
-    >>> new_user = Users(email="spam@ham-and-eggs.com", password="hunter2", access={"admin": True})
-    >>> new_user.save()
-    >>> new_user.name = "spammy"
-    >>> new_user.save()
-
-    # Remove test user
-    >>> new_user.delete()
-
-    .. seealso:: :class:`Access`, :class:`Phone`, :class:`models.meals.Meals`
     """
 
     email = EmailField(required=True, unique=True)
     password = StringField(required=True, min_length=6, regex=None)
     access = EmbeddedDocumentField(Access, default=Access(user=True, admin=False))
-    fav_meals = ListField(ReferenceField(Meals))
+    fav_meals = ListField(ReferenceField(Meal))
     name = StringField(unique=False)
     phone = PhoneField()
 
@@ -99,4 +80,4 @@ class User(Document):
     def save(self, *args, **kwargs):
         # Overwrite Document save method to generate password hash prior to saving
         self.generate_pw_hash()
-        super(Users, self).save(*args, **kwargs)
+        super(User, self).save(*args, **kwargs)
