@@ -37,4 +37,4 @@ class GroceryCartApi(Resource):
                 })
 
 
-        return jsonify({"result": grocery_list})
+        return jsonify(grocery_list)

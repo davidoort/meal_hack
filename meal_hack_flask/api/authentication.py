@@ -38,7 +38,7 @@ class SignUpApi(Resource):
         post_user = User(**data)
         post_user.save()
         output  = {'id': str(post_user.id)}
-        return jsonify({'result': output})
+        return jsonify(output)
 
         
 class LoginApi(Resource):
