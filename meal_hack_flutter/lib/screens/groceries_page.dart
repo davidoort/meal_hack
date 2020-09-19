@@ -14,7 +14,23 @@ class _GroceryPageState extends State<GroceriesPage> {
     return  Scaffold(
       appBar: AppBar(
         title: Text("Groceries list"),
+        actions: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: () {
+                toast("Let's go to the search view, whaddya say ?");
+              },
+              child: Icon(
+                Icons.add,
+                size: 26.0,
+              ),
+            )
+          ),
+        ],
       ),
+
+
       body: ListView.builder(
         itemCount: groceriesItems.length,
         itemBuilder: (context, index) {
@@ -25,14 +41,6 @@ class _GroceryPageState extends State<GroceriesPage> {
             },
            );
          },
-      ),
-
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        backgroundColor: Colors.orange,
-        onPressed: () {
-          toast("Let's go to the search view, whaddya say ?");
-        },
       ),
       
     );
