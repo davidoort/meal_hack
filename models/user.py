@@ -12,7 +12,7 @@ from mongoengine import (Document,
 from flask_bcrypt import generate_password_hash, check_password_hash
 
 # project resources
-from models.meals import Meals
+from models.meal import Meal
 
 # external packages
 import re
@@ -47,7 +47,7 @@ class PhoneField(StringField):
         super(PhoneField, self).validate(value=value)
 
 
-class Users(Document):
+class User(Document):
     """
     Template for a mongoengine document, which represents a user.
     Password is automatically hashed before saving.
