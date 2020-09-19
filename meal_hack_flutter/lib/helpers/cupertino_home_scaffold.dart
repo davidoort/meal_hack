@@ -1,16 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:meal_hack_flutter/models/user_settings.dart';
 import 'tab_item.dart';
 
 class CupertinoHomeScaffold extends StatelessWidget {
-  const CupertinoHomeScaffold(
-      {Key key,
-      @required this.currentTab,
-      @required this.onSelectTab,
-      @required this.widgetBuilder,
-      @required this.navigatorKeys})
-      : super(key: key);
+  const CupertinoHomeScaffold({
+    Key key,
+    @required this.currentTab,
+    @required this.onSelectTab,
+    @required this.widgetBuilder,
+    @required this.navigatorKeys,
+    // @required this.settings,
+  }) : super(key: key);
 
+  // final UserSettings settings;
   final TabItem currentTab;
   final ValueChanged<TabItem> onSelectTab;
   final Map<TabItem, WidgetBuilder> widgetBuilder;

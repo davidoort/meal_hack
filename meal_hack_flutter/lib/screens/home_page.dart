@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meal_hack_flutter/helpers/cupertino_home_scaffold.dart';
 import 'package:meal_hack_flutter/helpers/tab_item.dart';
+import 'package:meal_hack_flutter/models/user_settings.dart';
 import 'package:meal_hack_flutter/screens/groceries_page.dart';
 import 'package:meal_hack_flutter/screens/diary_page.dart';
 import 'package:meal_hack_flutter/screens/search_page.dart';
@@ -12,6 +13,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   TabItem _currentTab = TabItem.diary;
+  UserSettings settings;
+
+  void updateUserSettings(UserSettings newSettings) {
+    setState(() {
+      settings = newSettings;
+    });
+  }
 
   void _select(TabItem tabItem) {
     if (_currentTab == tabItem) {
@@ -23,8 +31,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   Map<TabItem, WidgetBuilder> get widgetBuilder => {
-        TabItem.diary: (_) => DiaryPage(),
-        TabItem.search: (_) => SearchPage(),
+        TabItem.diary: (_) => DiaryPage(
+            settings: settings,
+            updateSettings: (newSettings) => updateUserSettings(newSettings)),
+        TabItem.search: (_) => SearchPage(
+              settings: settings,
+            ),
         TabItem.groceries: (_) => GroceriesPage(),
       };
 
@@ -44,6 +56,7 @@ class _HomePageState extends State<HomePage> {
         onSelectTab: _select,
         widgetBuilder: widgetBuilder,
         navigatorKeys: navigatorKeys,
+        // settings: settings,
       ),
     );
   }

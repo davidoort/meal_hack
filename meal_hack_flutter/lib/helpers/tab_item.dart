@@ -9,7 +9,7 @@ class TabItemData {
   final IconData icon;
 
   static const Map<TabItem, TabItemData> allTabs = {
-    TabItem.diary: TabItemData(title: 'Diary', icon: Icons.view_headline),
+    TabItem.diary: TabItemData(title: 'Diary', icon: Icons.calendar_today),
     TabItem.search: TabItemData(title: 'Search', icon: Icons.search),
     TabItem.groceries:
         TabItemData(title: 'Groceries', icon: Icons.shopping_basket),
