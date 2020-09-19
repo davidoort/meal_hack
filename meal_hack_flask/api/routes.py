@@ -16,6 +16,6 @@ def create_routes(api):
     api.add_resource(UsersApi, '/users/')
     api.add_resource(UserApi, '/users/<user_id>')
 
-    # Recepie resources
+    # Recipe resources
     api.add_resource(RecipesApi, '/recipes/')
     api.add_resource(RecipeApi, '/recipes/<migros_id>')

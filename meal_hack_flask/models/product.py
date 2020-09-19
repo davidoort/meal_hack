@@ -33,10 +33,10 @@ def productFromMigros(migrosSource, ingredient_id) -> Product:
             migros_id = migrosSource["id"],
             name = migrosSource["name"],
             description = stripped_description,
-            image = {
-                'original': migrosSource["image"]["original"],
-                'stack': migrosSource["image"]["stack"],
-            },
+            image = Image(
+                original= migrosSource["image"]["original"],
+                stack= migrosSource["image"]["stack"],
+            ),
             allergen_text = migrosSource.get("allergen_text", "No allergens"),
             ingredient_id = ingredient_id
     )

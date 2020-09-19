@@ -6,7 +6,7 @@ from flask_restful import Resource
 from models.recipe import Recipe
 from api.errors import forbidden
 
-class RecepiesApi(Resource):
+class RecipesApi(Resource):
     """
     Resource to get all the meals stored in the database
     """
@@ -20,7 +20,7 @@ class RecepiesApi(Resource):
         post_user = Recipe(**data).save()
         return jsonify({'result': post_user})
 
-class RecepieApi(Resource):
+class RecipeApi(Resource):
     """
     Resource to get a specific meal stored in the database
     """

@@ -46,7 +46,7 @@ class Recipe(DynamicDocument):
     steps = ListField(EmbeddedDocumentField(Step))
     ingredients = ListField(EmbeddedDocumentField(Ingredient))
 
-def recepieFromMigros(migrosSource) -> Recipe:
+def recipeFromMigros(migrosSource) -> Recipe:
     stepsList = []
     for step in migrosSource["steps"]:
         stepsList.append(Step(
@@ -55,8 +55,8 @@ def recepieFromMigros(migrosSource) -> Recipe:
         ))
 
     ingredientsList = []
-    recepieSize = migrosSource["sizes"][0]
-    for ingredientBlock in recepieSize["ingredient_blocks"]:
+    recipeSize = migrosSource["sizes"][0]
+    for ingredientBlock in recipeSize["ingredient_blocks"]:
         for ingredient in ingredientBlock["ingredients"]:
             ingredientsList.append(Ingredient(
                 migros_id = ingredient["id"],
