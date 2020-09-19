@@ -1,21 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:meal_hack_flutter/screens/meal_page.dart';
+import 'package:overlay_support/overlay_support.dart';
 
-class DiaryPage extends StatelessWidget {
+class DiaryPage extends StatefulWidget {
+  @override
+  _DiaryPageState createState() => _DiaryPageState();
+}
+
+class _DiaryPageState extends State<DiaryPage> {
+  Future navigateToMealPage(context) async {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => MealPage()));
+  }
+
   @override
   Widget build(BuildContext context) {
-    // final database = Provider.of<Database>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(5),
-          ),
-        ),
-        title: Text('Jessica\'s Meal Diary'),
-        centerTitle: true,
-        leading: IconButton(icon: Icon(Icons.settings), onPressed: () => {}),
+        title: Text("Diary"),
       ),
-      // body: _buildContent(context, database),
+      body: Center(
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            ListTile(
+              title: Text('Meal 1'),
+              onTap: () {
+                navigateToMealPage(context);
+              },
+            ),
+            ListTile(
+              title: Text('Meal 2'),
+              onTap: () {
+                navigateToMealPage(context);
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

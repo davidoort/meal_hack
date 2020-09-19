@@ -1,62 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:meal_hack_flutter/screens/ingredient_page.dart';
+import 'package:meal_hack_flutter/screens/search_page.dart';
+import 'package:overlay_support/overlay_support.dart';
 
-class GroceriesPage extends StatelessWidget {
-  // Future<void> _delete(BuildContext context, Job job) async {
-  //   try {
-  //     final database = Provider.of<Database>(context, listen: false);
-  //     await database.deleteJob(job);
-  //   } on PlatformException catch (e) {
-  //     PlatformExceptionAlertDialog(title: 'Failed to create job', exception: e)
-  //         .show(context);
-  //   }
-  // }
+class GroceriesPage extends StatefulWidget {
+  @override
+  _GroceryPageState createState() => _GroceryPageState();
+}
+
+class _GroceryPageState extends State<GroceriesPage> {
+  Future navigateToIngredientPage(context) async {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => IngredientPage()));
+  }
+  Future navigateToSearchPage(context) async {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => SearchPage()));
+  }
+
+  List<String> groceriesItems = ["apples", "oranges"];
 
   @override
   Widget build(BuildContext context) {
-    // final database = Provider.of<Database>(context, listen: false);
-    return Scaffold(
+    return  Scaffold(
       appBar: AppBar(
-        title: Text('Groceries'),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            key: Key('addJobIconButton'),
-            icon: Icon(Icons.add),
-            // onPressed: () => EditJobPage.show(context, database: database),
+        title: Text("Groceries list"),
+        actions: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: () {
+                navigateToSearchPage(context);
+              },
+              child: Icon(
+                Icons.add,
+                size: 26.0,
+              ),
+            )
           ),
         ],
       ),
-      // body: _buildContent(context, database),
-      // bottomNavigationBar: ,
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      // floatingActionButton: _buildFab(
-      //     context), // This trailing comma makes auto-formatting nicer for build methods.
+
+
+      body: ListView.builder(
+        itemCount: groceriesItems.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text('${groceriesItems[index]}'),
+            onTap: () {
+                navigateToIngredientPage(context);
+            },
+           );
+         },
+      ),
+      
     );
   }
-
-  // Widget _buildContent(BuildContext context, Database database) {
-  //   return StreamBuilder<List<Job>>(
-  //     stream: database.jobsStream(),
-  //     builder: (context, snapshot) {
-  //       return ListItemsBuilder<Job>(
-  //         snapshot: snapshot,
-  //         itemBuilder: (context, job) => Dismissible(
-  //           key: Key('job-${job.id}'),
-  //           background: Container(
-  //             color: Colors.red,
-  //           ),
-  //           direction: DismissDirection.endToStart,
-  //           onDismissed: (_) => _delete(context, job),
-  //           child: JobListTile(
-  //             job: job,
-  //             onTap: () => JobEntriesPage.show(
-  //               context,
-  //               job,
-  //             ),
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
 }
