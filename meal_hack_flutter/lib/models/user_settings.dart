@@ -1,9 +1,11 @@
 class UserSettings {
-  double budget;
-  double prep_time;
-  bool vegeterian;
-  bool vegan;
-  List<Allergy> allergies;
+  // Dietary restrictions
+  static List<Restriction> restrictions = [];
+
+  // Other
+  static double budget = double.maxFinite;
+  static double prepTime = double.maxFinite;
+
 }
 
-enum Allergy { nuts, gluten }
+enum Restriction { vegetarian, vegan, nutAllergy, glutenFree, dairyFree }

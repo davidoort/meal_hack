@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meal_hack_flutter/screens/meal_page.dart';
 import 'package:meal_hack_flutter/screens/ingredient_page.dart';
+import 'package:meal_hack_flutter/models/user_settings.dart';
 import 'package:overlay_support/overlay_support.dart';
 
 class SearchPage extends StatefulWidget {
@@ -21,11 +22,13 @@ class _SearchPageState extends State<SearchPage> {
   // Where to search
   bool meals = true;
 
+  
   // Search filters
-  bool vegetarian = false;
-  bool vegan = false;
-  bool dairyFree = false;
-  bool nutFree = false;
+  bool vegetarian;
+  bool vegan = UserSettings.restrictions.contains(Restriction.vegan);
+  bool nutAllergy = UserSettings.restrictions.contains(Restriction.nutAllergy);
+  bool glutenFree = UserSettings.restrictions.contains(Restriction.glutenFree);
+  bool dairyFree = UserSettings.restrictions.contains(Restriction.dairyFree);
 
   static List<String> mainDataList = [
    "Apple",
@@ -67,7 +70,27 @@ class _SearchPageState extends State<SearchPage> {
         Text(title),
         Checkbox(
           value: boolValue,
-          onChanged: (bool value) { toast("Still to be done"); },
+          onChanged: (bool value) {
+            setState(() {
+              switch (title) {
+                case "vegetarian":
+                  this.vegetarian = value;
+                  break;
+                case "vegan":
+                  this.vegan = value;
+                  break;
+                case "nut allergy":
+                  this.nutAllergy = value;
+                  break;
+                case "gluten free":
+                  this.glutenFree = value;
+                  break;
+                case "dairy free":
+                  this.dairyFree = value;
+                  break;
+              }
+            });
+          },
         )
       ],
     );
@@ -75,6 +98,12 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
+    this.vegetarian = this.vegetarian == null ? UserSettings.restrictions.contains(Restriction.vegetarian) : this.vegetarian;
+    this.vegan = this.vegan == null ? UserSettings.restrictions.contains(Restriction.vegan) : this.vegan;
+    this.nutAllergy = this.nutAllergy == null ? UserSettings.restrictions.contains(Restriction.nutAllergy) : this.nutAllergy;
+    this.glutenFree = this.glutenFree == null ? UserSettings.restrictions.contains(Restriction.glutenFree) : this.glutenFree;
+    this.dairyFree = this.dairyFree == null ? UserSettings.restrictions.contains(Restriction.dairyFree) : this.dairyFree;
+
     return Scaffold(
       body: Column(
         children: <Widget>[
@@ -113,10 +142,11 @@ class _SearchPageState extends State<SearchPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              checkbox("Vegetarian", vegetarian),
-              checkbox("Vegan", vegan),
-              checkbox("Dairy free", dairyFree),
-              checkbox("Nut free", nutFree),
+              checkbox("vegetarian", this.vegetarian),
+              checkbox("vegan", this.vegan),
+              checkbox("nut allergy", this.nutAllergy),
+              checkbox("gluten free", this.glutenFree),
+              checkbox("dairy free", this.dairyFree),
             ],
           ),
 
