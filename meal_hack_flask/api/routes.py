@@ -2,6 +2,7 @@ from api.authentication import SignUpApi, LoginApi
 from api.meals import MealsApi, MealApi
 from api.users import UsersApi, UserApi
 from api.recipes import RecipesApi, RecipeApi
+from api.products import ProductsApi, ProductApi
 
 def create_routes(api):
     # Authentication resources
@@ -19,3 +20,7 @@ def create_routes(api):
     # Recipe resources
     api.add_resource(RecipesApi, '/recipes/')
     api.add_resource(RecipeApi, '/recipes/<migros_id>')
+
+    # Recipe resources
+    api.add_resource(ProductsApi, '/products/')
+    api.add_resource(ProductApi, '/products/<migros_id>')
