@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:meal_hack_flutter/screens/ingredient_page.dart';
+import 'package:meal_hack_flutter/screens/search_page.dart';
 import 'package:overlay_support/overlay_support.dart';
 
 class GroceriesPage extends StatefulWidget {
@@ -7,6 +9,13 @@ class GroceriesPage extends StatefulWidget {
 }
 
 class _GroceryPageState extends State<GroceriesPage> {
+  Future navigateToIngredientPage(context) async {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => IngredientPage()));
+  }
+  Future navigateToSearchPage(context) async {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => SearchPage()));
+  }
+
   List<String> groceriesItems = ["apples", "oranges"];
 
   @override
@@ -19,7 +28,7 @@ class _GroceryPageState extends State<GroceriesPage> {
             padding: EdgeInsets.only(right: 20.0),
             child: GestureDetector(
               onTap: () {
-                toast("Let's go to the search view, whaddya say ?");
+                navigateToSearchPage(context);
               },
               child: Icon(
                 Icons.add,
@@ -37,7 +46,7 @@ class _GroceryPageState extends State<GroceriesPage> {
           return ListTile(
             title: Text('${groceriesItems[index]}'),
             onTap: () {
-              toast("I can haz transishion pweeeaze ?");
+                navigateToIngredientPage(context);
             },
            );
          },

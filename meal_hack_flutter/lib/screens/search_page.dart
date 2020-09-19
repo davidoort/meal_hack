@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:meal_hack_flutter/screens/meal_page.dart';
+import 'package:meal_hack_flutter/screens/ingredient_page.dart';
 import 'package:overlay_support/overlay_support.dart';
 
 class SearchPage extends StatefulWidget {
@@ -7,6 +9,13 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  Future navigateToMealPage(context) async {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => MealPage()));
+  }
+  Future navigateToIngredientPage(context) async {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => IngredientPage()));
+  }
+
   TextEditingController _textController = TextEditingController();
 
   // Where to search
@@ -117,7 +126,10 @@ class _SearchPageState extends State<SearchPage> {
               children: newDataList.map((data) {
                 return ListTile(
                   title: Text(data),
-                  onTap: ()=> print(data),);
+                  onTap: () {
+                    meals ? navigateToMealPage(context) : navigateToIngredientPage(context);
+                  },
+                );
               }).toList(),
             ),
           )
