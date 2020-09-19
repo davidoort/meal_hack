@@ -6,6 +6,7 @@ import json
 from pprint import pprint
 import mongoengine as me
 from mongoengine.errors import NotUniqueError
+from tools.db import init_db
 
 
 def scrape_recipe(recipe_name:str):
@@ -48,9 +49,7 @@ def scrape_recipe(recipe_name:str):
 
 if __name__ == "__main__":
     # Connect to database and reset the recipe collection
-    me.connect('meal_hack')
-    # Recipe.drop_collection()
-    # Product.drop_collection()
+    init_db()
 
     meals = ['sushi', 'chili con carne', 'tacos', 'curry', 'fondue', 'dahl', 'dim sum']
     for meal in meals:
