@@ -1,6 +1,6 @@
 from mongoengine import Document, StringField, FloatField
 
-class Meals(Document):
+class Meal(Document):
     """
     Template for mongoengine document, which represent's a meal
 
