@@ -16,4 +16,4 @@ class Meal(Document):
     quantity = IntField(min_value=1)
     note = StringField(max_length=240)
     recipe_id = IntField(required=True)
-    recipe_name = StringField(requried=True)
+    recipe_title = StringField(requried=True)
