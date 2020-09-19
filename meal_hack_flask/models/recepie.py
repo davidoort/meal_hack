@@ -56,12 +56,11 @@ def fromMigros(migrosSource) -> Recepie:
 
     ingredientsList = []
     recepieSize = migrosSource["sizes"][0]
-    personQuantity = recepieSize["quantity"]
     for ingredientBlock in recepieSize["ingredient_blocks"]:
         for ingredient in ingredientBlock["ingredients"]:
             ingredientsList.append(Ingredient(
                 product_id = ingredient["id"],
-                quantity = ingredient["amount"]["quantity"] / personQuantity,
+                quantity = ingredient["amount"]["quantity"],
                 quantity_text = ingredient["amount"]["text"],
                 text = ingredient["text"],
                 display_text = f'{ingredient["amount"]["text"]} {ingredient["text"]}'

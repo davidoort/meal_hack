@@ -21,4 +21,5 @@ if __name__ == "__main__":
         migrosSource = hit["_source"]
         test = fromMigros(migrosSource)
         test.save()
-        # pprint(test.to_json())
+
+        # TODO scrape all the products as well

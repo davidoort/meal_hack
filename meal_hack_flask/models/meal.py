@@ -16,3 +16,4 @@ class Meal(Document):
     quantity = IntField(min_value=1)
     note = StringField(max_length=240)
     recepie = ReferenceField(Recepie)
+    recepie_name = StringField()
