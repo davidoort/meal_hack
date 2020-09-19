@@ -1,5 +1,5 @@
 from mongoengine import Document, StringField, FloatField, DateField, IntField, ReferenceField
-from models.recepie import Recepie
+from models.recipe import Recipe
 
 class Meal(Document):
     """
@@ -15,5 +15,5 @@ class Meal(Document):
     date = DateField(required=True)
     quantity = IntField(min_value=1)
     note = StringField(max_length=240)
-    recepie = ReferenceField(Recepie)
-    recepie_name = StringField()
+    recipe_id = IntField(required=True)
+    recipe_name = StringField(requried=True)

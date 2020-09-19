@@ -1,7 +1,7 @@
 from api.authentication import SignUpApi, LoginApi
 from api.meals import MealsApi, MealApi
 from api.users import UsersApi, UserApi
-from api.recepies import RecepiesApi, RecepieApi
+from api.recipes import RecipesApi, RecipeApi
 
 def create_routes(api):
     # Authentication resources
@@ -17,5 +17,5 @@ def create_routes(api):
     api.add_resource(UserApi, '/users/<user_id>')
 
     # Recepie resources
-    api.add_resource(RecepiesApi, '/recepies/')
-    api.add_resource(RecepieApi, '/recpie/<migros_id>')
+    api.add_resource(RecipesApi, '/recipes/')
+    api.add_resource(RecipeApi, '/recipes/<migros_id>')

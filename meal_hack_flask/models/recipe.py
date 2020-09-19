@@ -29,13 +29,13 @@ class Ingredient(DynamicEmbeddedDocument):
     """
     To display, write quantity_text + text
     """
-    product_id = IntField()
+    migros_id = IntField()
     quantity = IntField()
     quantity_text = StringField()
     text = StringField()
     display_text = StringField()
 
-class Recepie(DynamicDocument):
+class Recipe(DynamicDocument):
     """
     """
     migros_id = IntField(unique=True)
@@ -46,7 +46,7 @@ class Recepie(DynamicDocument):
     steps = ListField(EmbeddedDocumentField(Step))
     ingredients = ListField(EmbeddedDocumentField(Ingredient))
 
-def fromMigros(migrosSource) -> Recepie:
+def recepieFromMigros(migrosSource) -> Recipe:
     stepsList = []
     for step in migrosSource["steps"]:
         stepsList.append(Step(
@@ -59,14 +59,14 @@ def fromMigros(migrosSource) -> Recepie:
     for ingredientBlock in recepieSize["ingredient_blocks"]:
         for ingredient in ingredientBlock["ingredients"]:
             ingredientsList.append(Ingredient(
-                product_id = ingredient["id"],
+                migros_id = ingredient["id"],
                 quantity = ingredient["amount"]["quantity"],
                 quantity_text = ingredient["amount"]["text"],
                 text = ingredient["text"],
                 display_text = f'{ingredient["amount"]["text"]} {ingredient["text"]}'
             ))
 
-    return Recepie(
+    return Recipe(
             migros_id = migrosSource["id"],
             title = migrosSource["title"],
             teaser_text = migrosSource["teasertext"],

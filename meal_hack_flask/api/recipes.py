@@ -3,7 +3,7 @@ from flask import Response, request, jsonify
 from flask_restful import Resource
 
 # project resources
-from models.recepie import Recepie
+from models.recipe import Recipe
 from api.errors import forbidden
 
 class RecepiesApi(Resource):
@@ -12,12 +12,12 @@ class RecepiesApi(Resource):
     """
 
     def get(self) -> Response:
-        output = Recepie.objects()
+        output = Recipe.objects()
         return jsonify({'result': output})
 
     def post(self) -> Response:
         data = request.get_json()
-        post_user = Recepie(**data).save()
+        post_user = Recipe(**data).save()
         return jsonify({'result': post_user})
 
 class RecepieApi(Resource):
@@ -26,14 +26,14 @@ class RecepieApi(Resource):
     """
 
     def get(self, migros_id: int) -> Response:
-        output = Recepie.objects(id=migros_id)
+        output = Recipe.objects(id=migros_id)
         return jsonify({'result': output})
 
     def put(self, migros_id:int) -> Response:
         data = request.get_json()
-        put_user = Recepie.objects(id=migros_id).update(**data)
+        put_user = Recipe.objects(id=migros_id).update(**data)
         return jsonify({'result': put_user})
 
     def delete(self, migros_id:int) -> Response:
-        delete_user = Recepie.objects(id=migros_id).delete()
+        delete_user = Recipe.objects(id=migros_id).delete()
         return jsonify({'result': delete_user})
