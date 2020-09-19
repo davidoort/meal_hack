@@ -1,30 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:overlay_support/overlay_support.dart';
 
-class SearchPage extends StatelessWidget {
+class SearchPage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return OverlaySupport(
-      child: MaterialApp(
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text('Meal/ingredient search')
-            ),
-            body: Center(
-              child: ListSearch()
-            )
-        )
-      )
-    );
-  }
+  _SearchPageState createState() => _SearchPageState();
 }
 
-class ListSearch extends StatefulWidget {
-  ListSearchState createState() => ListSearchState();
-}
-
-class ListSearchState extends State<ListSearch> {
-
+class _SearchPageState extends State<SearchPage> {
   TextEditingController _textController = TextEditingController();
 
   // Where to search
