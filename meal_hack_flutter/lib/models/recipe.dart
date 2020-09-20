@@ -27,7 +27,14 @@ class Step {
   String title;
   String description;
 
-  Step()
+  Step({this.title, this.description});
+
+  factory Step.fromJson(Map<String, dynamic> json) {
+    return Step(
+      title: json["title"],
+      description: json["description"]
+    )
+  }
 }
 
 class Ingredient {
@@ -36,6 +43,16 @@ class Ingredient {
   String quantity_text;
   String text;
   String display_text;
+
+  Ingredient({this.migros_id, this.quantity, this.quantity_text, this.text, this.display_text});
+
+  factory Ingredient.fromJson(Map<String, dynamic> json) {
+    migros_id: json["migros_id"],
+    quantity: json["quantity"],
+    quantity_text: json["quantity_text"],
+    text: json["text"],
+    display_text: json["display_text"]
+  }
 }
 
 class Recipe {
@@ -49,14 +66,30 @@ class Recipe {
 
   Recipe({this.migros_id, this.title, this.teaser_text, this.duration_total_in_minutes, this.nutrients, this.steps, this.ingredients});
 
+  List<Nutrients> parseNutrients(Map<String, dynamic> j) {
+    Iterable list = json.decode(j);
+    return List<Nutrient>.from(list.map((e) => Nutrient.fromJson(e)));
+  }
+
+
+  List<Step> parseSteps(Map<String, dynamic> j) {
+    Iterable list = json.decode(j);
+    return List<Step>.from(list.map((e) => Step.fromJson(e)));
+  }
+
+  List<Ingredient> parseIngredients(Map<String, dynamic> j) {
+    Iterable list = json.decode(j);
+    return List<Ingredient>.from(list.map((e) => Ingredient.fromJson(e)));
+  }
+
   factory Recipe.fromJson(Map<String, dynamic> json) {
     return Recipe(
         migros_id: json["migros_id"],
         teaser_text: json["teaser_text"],
         duration_total_in_minutes: json["duration_total_in_minutes"],
-        nutrients: json["nutrients"],
-        steps: json["steps"],
-        ingredients: json["ingredients"],
+        nutrients: parseNutrients(json["nutrients"]),
+        steps: parseSteps(json["steps"]),
+        ingredients: parseIngredients(json["ingredients"]),
         title: json["title"]);
   }
 }
