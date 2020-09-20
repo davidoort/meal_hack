@@ -17,3 +17,5 @@ class Meal(Document):
     note = StringField(max_length=240)
     recipe_id = IntField(required=True)
     recipe_title = StringField(requried=True)
+    recipe_eco_score = IntField()
+    recipe_nutri_score = IntField()

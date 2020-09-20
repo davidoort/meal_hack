@@ -33,7 +33,6 @@ def put_recipe(recipe: Recipe, kitchen_id, wordlist):
         for word in ingredient.text.split(" "):
             lowercase = word.lower()
             lowercase = lowercase.strip()
-            print(lowercase)
             if lowercase in wordlist:
                 ingredients.append({
                     "id": f"{recipe.slug}-{word}",
@@ -57,9 +56,6 @@ def put_recipe(recipe: Recipe, kitchen_id, wordlist):
             "ingredients": ingredients 
         }
     }    
-
-    pprint("Sending to " + url)
-    pprint(body)
 
     response = requests.put(url, json=body, auth=AUTH)
     if response.status_code not in [200, 201, 202]:
@@ -88,12 +84,21 @@ if __name__ == '__main__':
 
     wordlist = readWordlist('resources/eaternity_ingredient_database.txt')
     
-    recipes = [Recipe.objects.first()]
+    recipes = Recipe.objects
     for recipe in recipes:
         response = put_recipe(recipe, kitchen_id, wordlist)
-        print(response)
         if response.status_code == 200:
             r = requests.get(f"{BASE_URL}/api/kitchens/{kitchen_id}/recipes/{recipe.slug}?indicators=true", auth=AUTH)
-            pprint(r.json())
+            endresult = r.json()
+
+            rating_translation = {'A': 5, 'B': 4, 'C': 3, 'D': 2, 'E': 1}
+            eco_score = rating_translation[endresult['recipe']['rating']]
+            nutri_score = rating_translation[endresult['recipe']['indicators']['vita-score']['vita-score-rating']]
+
+            print(f"{recipe.title} -> eco rating : {eco_score}, nutri score: {nutri_score}")
+            pprint(endresult)
+            
+            recipe.update(set__eco_score=eco_score)
+            recipe.update(set__nutri_score=nutri_score)
         else:
             print("Failed to submit to the eaternity api")

@@ -11,14 +11,16 @@ def generate_meals(num_days:int):
         quantity = randint(1, 4)
         recipies = Recipe.objects
         random_recipe = recipies[randint(0, len(recipies))]
-        print(random_recipe.title)
+        print(random_recipe.title, random_recipe.eco_score)
 
         meal = Meal(
             date = meal_day,
             quantity = quantity,
             note = "randomly generated",
             recipe_id = random_recipe.migros_id,
-            recipe_title = random_recipe.title
+            recipe_title = random_recipe.title,
+            recipe_nutri_score=random_recipe.nutri_score,
+            recipe_eco_score=random_recipe.eco_score,
         )
 
         meal.save()

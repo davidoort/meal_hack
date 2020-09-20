@@ -36,8 +36,6 @@ class Ingredient(DynamicEmbeddedDocument):
     display_text = StringField()
 
 class Recipe(DynamicDocument):
-    """
-    """
     migros_id = IntField(unique=True)
     title = StringField()
     teaser_text = StringField()
@@ -46,7 +44,10 @@ class Recipe(DynamicDocument):
     steps = ListField(EmbeddedDocumentField(Step))
     ingredients = ListField(EmbeddedDocumentField(Ingredient))
     language = StringField()
+    eco_score = IntField()
+    nutri_score = IntField()
     slug = StringField()
+
 
 def recipeFromMigros(migrosSource) -> Recipe:
     stepsList = []
