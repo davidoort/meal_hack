@@ -1,34 +1,86 @@
 import 'package:flutter/material.dart';
 import 'package:meal_hack_flutter/screens/ingredient_page.dart';
+import 'package:meal_hack_flutter/models/meal.dart';
+import 'package:meal_hack_flutter/models/recipe.dart';
 import 'package:overlay_support/overlay_support.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:core';
+import 'package:flutter/services.dart';
 
-class MealPage extends StatelessWidget {
+Future<Recipe> fetchRecipeWithId(int Id) async {
+  final response = await http.get('http://7e6d8618d47a.ngrok.io/recipes/' + Id.toString()); 
+
+  if (response.statusCode == 200) {
+    return Recipe.fromJson(json.decode(response.body));
+  } else {
+    throw Exception('Failed to load meals');
+  }
+}
+
+class MealPage extends StatefulWidget {
+  @override
+  final Meal meal;
+  MealPage({Key key, @required this.meal}) : super(key: key);
+
+  _MealPageState createState() => _MealPageState();
+}
+
+class _MealPageState extends State<MealPage> {
   Future navigateToIngredientPage(context) async {
     Navigator.push(context, MaterialPageRoute(builder: (context) => IngredientPage()));
   }
 
+  _MealPageState({Key key, @required this.recipeId}) : super();
+
+  int recipeId;
+  Future<Recipe> futureRecipe;
+
   @override
   Widget build(BuildContext context) {
+    recipeId = widget.meal.recipeId;
+    futureRecipe = fetchRecipeWithId(recipeId);
+
     Widget titleSection = Container(
       padding: const EdgeInsets.all(32),
       child: Row(
         children: [
           Expanded(
-            /*1*/
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Nutriscore',
-                  style: TextStyle(
-                    color: Colors.grey[500],
-                  ),
+                FutureBuilder<Recipe>(
+                  future: futureRecipe,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      Recipe recipe = snapshot.data;
+                      return Text(
+                        'Nutriscore ' + recipe.nutrients.calories.toString() + " cal.",
+                        style: TextStyle(
+                          color: Colors.grey[500],
+                        ),
+                      );
+                    } else if (snapshot.hasError) return Text("${snapshot.error}");
+
+                    return CircularProgressIndicator();
+                  }
                 ),
-                Text(
-                  'Carbon footprint',
-                  style: TextStyle(
-                    color: Colors.grey[500],
-                  ),
+
+                FutureBuilder<Recipe>(
+                  future: futureRecipe,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      Recipe recipe = snapshot.data;
+                      return Text(
+                        'Carbon footprint ' + recipe.nutrients.calories.toString() + " g. of CO2", // TODO:
+                        style: TextStyle(
+                          color: Colors.grey[500],
+                        ),
+                      );
+                    } else if (snapshot.hasError) return Text("${snapshot.error}");
+
+                    return CircularProgressIndicator();
+                  }
                 ),
               ],
             ),
@@ -58,14 +110,9 @@ class MealPage extends StatelessWidget {
         // Important: Remove any padding from the ListView.
         padding: EdgeInsets.zero,
         children: <Widget>[
-          DrawerHeader(
-            child: Text('Ingredients (this is scrollable btw)'),
-            decoration: BoxDecoration(
-              color: Colors.blue,
-            ),
-          ),
+          Text('Ingredients'),
           ListTile(
-            title: Text('Ingredient 1'),
+            title: Text('Ingredient 1'), // TODO:
             onTap: () {
                 navigateToIngredientPage(context);
             },
@@ -90,7 +137,19 @@ class MealPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('<Insert meal title here>'),
+        title: FutureBuilder<Recipe>(
+          future: futureRecipe,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              Recipe recipe = snapshot.data;
+                return Text(
+                  '${recipe.title}' // TODO: Why tf does this show "type..." ?
+                );
+            } else if (snapshot.hasError) return Text("${snapshot.error}");
+
+            return CircularProgressIndicator();
+            }           
+          ),
       ),
        body: ListView(
          children: [

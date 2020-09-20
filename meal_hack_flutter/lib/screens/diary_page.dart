@@ -9,7 +9,7 @@ import 'dart:core';
 import 'package:flutter/services.dart';
 
 Future<List<Meal>> fetchMeals() async {
-  final response = await http.get('http://ad4decd8249e.ngrok.io/meals/');
+  final response = await http.get('http://7e6d8618d47a.ngrok.io/meals/');
 
   if (response.statusCode == 200) {
     Iterable list = json.decode(response.body);
@@ -142,7 +142,13 @@ class _DiaryPageState extends State<DiaryPage> {
                           ListTile(
                             title: Text('${meals[index].recipeName}'),
                             onTap: () {
-                              navigateToMealPage(context);
+                              //navigateToMealPage(context);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MealPage(meal: meals[index]),
+                                ),
+                              );
                             },
                           ),
                         ],
