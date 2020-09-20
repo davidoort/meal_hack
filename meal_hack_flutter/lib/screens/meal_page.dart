@@ -11,8 +11,15 @@ import 'package:flutter/services.dart';
 Future<Recipe> fetchRecipeWithId(int Id) async {
   final response = await http.get('http://7e6d8618d47a.ngrok.io/recipes/' + Id.toString()); 
 
+  print("wassup");
   if (response.statusCode == 200) {
-    return Recipe.fromJson(json.decode(response.body));
+    print("a-okay");
+    Iterable list = json.decode(response.body);
+    print(list.toString());
+    Recipe r = Recipe.fromJson(json.decode(response.body));
+    print(r);
+    print("hello");
+    return r;
   } else {
     throw Exception('Failed to load meals');
   }
@@ -142,11 +149,12 @@ class _MealPageState extends State<MealPage> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               Recipe recipe = snapshot.data;
-                return Text(
-                  '${recipe.title}' // TODO: Why tf does this show "type..." ?
+              return Text(
+                  '${recipe.title[0]}' // TODO: Why tf does this show "type..." ?
                 );
             } else if (snapshot.hasError) return Text("${snapshot.error}");
 
+            print("fuck");
             return CircularProgressIndicator();
             }           
           ),
