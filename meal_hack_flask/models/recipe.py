@@ -45,6 +45,8 @@ class Recipe(DynamicDocument):
     nutrients = EmbeddedDocumentField(Nutrients)
     steps = ListField(EmbeddedDocumentField(Step))
     ingredients = ListField(EmbeddedDocumentField(Ingredient))
+    language = StringField()
+    slug = StringField()
 
 def recipeFromMigros(migrosSource) -> Recipe:
     stepsList = []
@@ -73,5 +75,7 @@ def recipeFromMigros(migrosSource) -> Recipe:
             duration_total_in_minutes = migrosSource["duration_total_in_minutes"],
             nutrients = Nutrients(**migrosSource["nutrients"]),
             steps = stepsList,
-            ingredients = ingredientsList
+            ingredients = ingredientsList,
+            language= migrosSource["language"],
+            slug = migrosSource["slug"]
     )

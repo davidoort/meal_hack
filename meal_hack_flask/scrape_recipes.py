@@ -9,48 +9,75 @@ from mongoengine.errors import NotUniqueError
 from tools.db import init_db
 
 
-def scrape_recipe(recipe_name:str):
-    queryUrl = f'https://hackzurich-api.migros.ch/hack/recipe/recipes_fr/_search?q={recipe_name}'
+def scrape_recipe(recipe_name:str, num_recipes: int = 1) -> set:
+    queryUrl = f'https://hackzurich-api.migros.ch/hack/recipe/recipes_de/_search?q={recipe_name}'
     response = requests.get(queryUrl, auth=HTTPBasicAuth('hackzurich2020', 'uhSyJ08KexKn4ZFS'))
+
+    ingredient_ids = set()
     if response.status_code == 200:
         data = response.json()
         hits = data["hits"]["hits"]
-        print(f'{len(hits)} recipes found for {recipe_name}')
-        productSet = set()
         for hit in hits : 
             migrosSource = hit["_source"]
             parsedRecipe = recipeFromMigros(migrosSource)
+            for ingredient in parsedRecipe.ingredients:
+                ingredient_ids.add(ingredient.migros_id)
+
             try:
                 parsedRecipe.save()
-                print(parsedRecipe.title)
+                print(f"Saved {parsedRecipe.title}")
             except NotUniqueError:
                 pass
 
-            for ingredient in parsedRecipe.ingredients:
-                productSet.add(ingredient.migros_id)
+    return ingredient_ids
 
-        print(f'{len(productSet)} possible products')
-        for ingredient_id in productSet:
-            queryUrl = f"https://hackzurich-api.migros.ch/products?recipe_ingredient={ingredient_id}"
-            response = requests.get(queryUrl, auth=HTTPBasicAuth('hackzurich2020', 'uhSyJ08KexKn4ZFS'))
-            if (response.status_code != 200): 
-                continue
+        
+def downloadProductInfo(productSet: set, num_products:int = 2) -> set:
+    product_ids = set()
+    for ingredient_id in productSet:
+        queryUrl = f"https://hackzurich-api.migros.ch/products?recipe_ingredient={ingredient_id}&limit={num_products}"
+        response = requests.get(queryUrl, auth=HTTPBasicAuth('hackzurich2020', 'uhSyJ08KexKn4ZFS'))
+        if (response.status_code != 200): 
+            continue
 
-            data = response.json()
-            for product in data["products"]:
-                parsedProduct = productFromMigros(product, ingredient_id)
-                try:
-                    parsedProduct.save()
-                    print(parsedProduct.name)
-                except NotUniqueError:
-                    pass
+        data = response.json()
+        for product in data["products"]:
+            parsedProduct = productFromMigros(product, ingredient_id)
+            product_ids.add(parsedProduct.migros_id)
+            try:
+                parsedProduct.save()
+            except NotUniqueError:
+                pass
 
-        print("Done")
+    return product_ids
+
+def downloadLogisticsInfo(product_ids):
+    def queryUrl(product_id):
+        return f"https://hackzurich-api.migros.ch/hack/logistic/orders?articleID={product_id}"
+        
+    for product_id in product_ids:
+        response = requests.get(queryUrl(product_id), auth=HTTPBasicAuth('hackzurich2020', 'uhSyJ08KexKn4ZFS'))
+        if (response.status_code != 200):
+           continue
+       
+        data = response.json()
+        pprint(data)
 
 if __name__ == "__main__":
     # Connect to database and reset the recipe collection
     init_db()
 
-    meals = ['sushi', 'chili con carne', 'tacos', 'curry', 'fondue', 'dahl', 'dim sum']
+    # Scrape a boatload of recepies
+    meals = ['spaghetti', 'pizza', 'sushi', 'chili con carne', 'tacos', 'curry', 'fondue', 'dahl', 'dim sum']
+    ingredient_ids = set()
     for meal in meals:
-        scrape_recipe(meal)
+        possible_ingredients = scrape_recipe(meal, num_recipes=2)
+        ingredient_ids = ingredient_ids.union(possible_ingredients)
+
+    exit()
+    print(f"{len(ingredient_ids)} ingredients found")
+
+    # Get the products
+    product_ids = downloadProductInfo(ingredient_ids, num_products=5) 
+    print(f"{len(product_ids)} products found")
+    print("Done scraping data")

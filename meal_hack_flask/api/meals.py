@@ -26,7 +26,7 @@ class MealApi(Resource):
     """
 
     def get(self, meal_id: str) -> Response:
-        output = Meal.objects(id=meal_id)
+        output = Meal.objects(id=meal_id).first()
         return jsonify(output)
 
     def put(self, meal_id:str) -> Response:

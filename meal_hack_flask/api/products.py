@@ -26,7 +26,7 @@ class ProductApi(Resource):
     """
 
     def get(self, migros_id: int) -> Response:
-        output = Product.objects(migros_id=migros_id)
+        output = Product.objects(migros_id=migros_id).first()
         return jsonify(output)
 
     def put(self, migros_id:int) -> Response:

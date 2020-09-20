@@ -26,7 +26,7 @@ class RecipeApi(Resource):
     """
 
     def get(self, migros_id: int) -> Response:
-        output = Recipe.objects(migros_id=migros_id)
+        output = Recipe.objects(migros_id=migros_id).first()
         return jsonify(output)
 
     def put(self, migros_id:int) -> Response:
